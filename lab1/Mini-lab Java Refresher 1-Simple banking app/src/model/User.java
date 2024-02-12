@@ -56,6 +56,7 @@ public class User {
     }
 
     public String toString(){
-        return username + ", " + password + ", " + first_name + ", " + last_name + ", " + mobile_number;
+        return String.format("%-25s| %-15s| %-15s| %-15s| %-15s",
+                username, password, first_name, last_name, mobile_number);
     }
 }
