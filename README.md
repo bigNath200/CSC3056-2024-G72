@@ -8,8 +8,8 @@ Lab 1:
 TODO 1 - DONE
 TODO 2 - DONE
 TODO 3 - Report writing
-TODO 4 - 
-TODO 5
-TODO 6
-TODO 7
-TODO 8
+TODO 4 - DONE
+TODO 5 - DONE
+TODO 6 - DONE
+TODO 7 - Report writing
+TODO 8 - TBD
