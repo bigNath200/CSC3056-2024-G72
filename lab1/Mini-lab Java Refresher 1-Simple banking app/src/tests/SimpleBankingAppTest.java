@@ -71,13 +71,13 @@ public class SimpleBankingAppTest {
 	public static void testWithdrawals() {
 		// 1-Setup phase
 		double balanceBeforeWithdrawal = SimpleBankingApp.getBalance("5495-1234");
-		double withdrawalAmount = 10.55;
+		double withdrawalAmount = -8.16;
 		// 2-Exercise phase
-		SimpleBankingApp.addTransaction("5495-1234", withdrawalAmount);
+		SimpleBankingApp.addTransaction("5495-1234", (-1)*withdrawalAmount);
 		double balanceAfterWithdrawal = SimpleBankingApp.getBalance("5495-1234");
 		// 3-verify
-		assert balanceBeforeWithdrawal + withdrawalAmount == balanceAfterWithdrawal;
-		if (balanceBeforeWithdrawal + withdrawalAmount == balanceAfterWithdrawal)
+		assert balanceAfterWithdrawal + withdrawalAmount == balanceBeforeWithdrawal;
+		if (balanceAfterWithdrawal + withdrawalAmount == balanceBeforeWithdrawal)
 			System.out.println(TestUtils.TEXT_COLOR_GREEN + "testWithdrawal: TC1 passed"+ TestUtils.TEXT_COLOR_RESET);
 		else {
 			System.out.println(TestUtils.TEXT_COLOR_RED + "testWithdrawal: TC1 FAILED XXX: balanceBefore - withdrawalAmount != balanceAfter");
