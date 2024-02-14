@@ -59,7 +59,7 @@ public class UserTest {
             System.out.println(TestUtils.TEXT_COLOR_RED + "TC5-getMobile_number-FAILED" + TestUtils.TEXT_COLOR_RESET);
         }
 
-        // using asserts
+        // using assertions to test user constructor
         assert testUser.getUsername() == test_username;
         assert testUser.getPassword() == test_password;
         assert testUser.getFirst_name() == test_first_name;
