@@ -42,5 +42,20 @@ public class DataUtilitiesTest extends DataUtilities {
 		assertEquals("Wrong sum returned. It should be 5.0", 
 				5.0, DataUtilities.calculateColumnTotal(values2D, 0), 0.0000001d);
 	}
+	@Test
+	public void testNullDataColumnTotal()
+	{
+		try
+		{
+			DataUtilities.calculateColumnTotal(null, 0);
+			fail("No exception thrown. The expected outcome was: a thrown 				exception of type: IllegalArgumentException");
+		}
+		catch (Exception e)
+		{
+			assertTrue("Incorrect exception type thrown", 
+				e.getClass().equals(IllegalArgumentException.class));
+		}
+	}
+
 
 }
