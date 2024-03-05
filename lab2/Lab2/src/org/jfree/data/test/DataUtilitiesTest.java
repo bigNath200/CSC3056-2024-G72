@@ -12,9 +12,9 @@ import org.junit.Test;
 
 public class DataUtilitiesTest extends DataUtilities {
     
-    private Values2D values2D;
-    private double[] doubleArray;
-    private double[][] doubleArray2D;
+    private Values2D values;
+    private double[] numbersArray;
+    private double[][] doubleArrayNumbers;
 
     @Before
     public void setUp() {
@@ -24,35 +24,35 @@ public class DataUtilitiesTest extends DataUtilities {
 
     private void initializeValues() {
         DefaultKeyedValues2D testValues = new DefaultKeyedValues2D();
-        values2D = testValues;
+        values = testValues;
         testValues.addValue(1, 0, 0);
         testValues.addValue(4, 1, 0);
         testValues.addValue(7, 0, 1);
-        testValues.addValue(9, 1, 1);
+        testValues.addValue(5, 1, 1);
     }
 
     private void initializeArrays() {
         double[] testArray = {1, 2, 3};
-        doubleArray = testArray;
+        numbersArray = testArray;
 
         double[][] testArray2D = {
-                {1.0, 2.0, 3.0},
-                {4.0, 5.0, 6.0},
-                {7.0, 8.0, 9.0}
+                {1.0, 2.0},
+                {3.0, 4.0},
+                
         };
-        doubleArray2D = testArray2D;
+        doubleArrayNumbers = testArray2D;
     }
 
     @After
     public void tearDown() {
-        values2D = null;
-        doubleArray = null;
-        doubleArray2D = null;
+        values = null;
+        doubleArrayNumbers = null;
+        numbersArray = null;
     }
 
     @Test
     public void testValidDataAndColumnTotal() {
-        assertEquals("Wrong sum returned for column total.", 5.0, DataUtilities.calculateColumnTotal(values2D, 0), 0.0000001d);
+        assertEquals("Wrong sum returned for column total.", 12, DataUtilities.calculateColumnTotal(values, 1), 0.0000001d);
     }
 
     @Test
@@ -60,14 +60,14 @@ public class DataUtilitiesTest extends DataUtilities {
         try {
             DataUtilities.calculateColumnTotal(null, 0);
             fail("Expected IllegalArgumentException for null data.");
-        } catch (IllegalArgumentException e) {
-            assertTrue("Incorrect exception type thrown", true);
+        } catch (Exception e) {
+            assertTrue("Incorrect exception type thrown", e.getClass().equals(IllegalArgumentException.class));
         }
     }
 
     @Test
     public void testValidDataAndRowTotal() {
-        assertEquals("Wrong sum returned for row total.", 13, DataUtilities.calculateRowTotal(values2D, 1), 0.0000001d);
+        assertEquals("Wrong sum returned for row total.", 9, DataUtilities.calculateRowTotal(values, 1), 0.0000001d);
     }
 
     @Test
@@ -75,15 +75,15 @@ public class DataUtilitiesTest extends DataUtilities {
         try {
             DataUtilities.calculateRowTotal(null, 0);
             fail("Expected IllegalArgumentException for null data.");
-        } catch (IllegalArgumentException e) {
-            assertTrue("Incorrect exception type thrown", true);
+        } catch (Exception e) {
+            assertTrue("Incorrect exception type thrown", e.getClass().equals(IllegalArgumentException.class));
         }
     }
 
     @Test
     public void testCreateNumberArrayValidData() {
-        Number[] noArray = DataUtilities.createNumberArray(doubleArray);
-        assertDoubleAndNumberArraysEqual("Number and Double arrays do not match", doubleArray, noArray);
+        Number[] noArray = DataUtilities.createNumberArray(numbersArray);
+        assertArrayEquals("Number and Double arrays do not match", numbersArray, noArray);
     }
 
     @Test
@@ -91,15 +91,15 @@ public class DataUtilitiesTest extends DataUtilities {
         try {
             DataUtilities.createNumberArray(null);
             fail("Expected IllegalArgumentException for null data.");
-        } catch (IllegalArgumentException e) {
-            assertTrue("Incorrect exception type thrown", true);
+        } catch (Exception e) {
+            assertTrue("Incorrect exception type thrown", e.getClass().equals(IllegalArgumentException.class));
         }
     }
 
     @Test
     public void testNumberArray2DCreationFrom2DDoubleArray() {
-        Number[][] noArray2D = DataUtilities.createNumberArray2D(doubleArray2D);
-        assert2DDoubleAndNumberArraysEqual("Number and Double arrays do not match", doubleArray2D, noArray2D);
+        Number[][] noArray = DataUtilities.createNumberArray2D(doubleArrayNumbers);
+        assert2DArraysEqual("Number and Double arrays do not match", doubleArrayNumbers, noArray);
     }
 
     @Test
@@ -107,8 +107,8 @@ public class DataUtilitiesTest extends DataUtilities {
         try {
             DataUtilities.createNumberArray2D(null);
             fail("Expected IllegalArgumentException for null data.");
-        } catch (IllegalArgumentException e) {
-            assertTrue("Incorrect exception type thrown", true);
+        } catch (Exception e) {
+            assertTrue("Incorrect exception type thrown", e.getClass().equals(IllegalArgumentException.class));
         }
     }
 
@@ -128,12 +128,12 @@ public class DataUtilitiesTest extends DataUtilities {
         try {
             DataUtilities.getCumulativePercentages(null);
             fail("Expected IllegalArgumentException for null data.");
-        } catch (IllegalArgumentException e) {
-            assertTrue("Incorrect exception type thrown", true);
+        } catch (Exception e) {
+            assertTrue("Incorrect exception type thrown", e.getClass().equals(IllegalArgumentException.class));
         }
     }
 
-    private static void assertDoubleAndNumberArraysEqual(String message, double[] doubles, Number[] numbers) {
+    private static void assertArrayEquals(String message, double[] doubles, Number[] numbers) {
         assertTrue("Arrays do not have the same length.", doubles.length == numbers.length);
 
         try {
@@ -144,9 +144,11 @@ public class DataUtilitiesTest extends DataUtilities {
             throw new AssertionError(message);
         }
     }
+    
+  
 
-    private static void assert2DDoubleAndNumberArraysEqual(String message, double[][] doubles, Number[][] numbers) {
-        assertTrue("Arrays do not have the same number of rows.", doubles.length == numbers.length);
+    private static void assert2DArraysEqual(String message, double[][] doubles, Number[][] numbers) {
+        assertTrue("Arrays aren't equal.", doubles.length == numbers.length);
 
         try {
             for (int i = 0; i < doubles.length; i++) {
@@ -163,3 +165,10 @@ public class DataUtilitiesTest extends DataUtilities {
         }
     }
 }
+
+
+
+
+
+
+
