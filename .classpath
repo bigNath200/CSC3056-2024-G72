@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="lab1/Mini-lab Java Refresher 1-Simple banking app/src"/>
+	<classpathentry kind="src" path="lab2/Lab2/src"/>
+	<classpathentry kind="output" path="lab1/Mini-lab Java Refresher 1-Simple banking app/out/production/Mini-lab Java Refresher 1-Simple banking app"/>
+</classpath>
