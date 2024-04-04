@@ -13,8 +13,7 @@ public class RangeTest {
 	
 	@Before
 	public void setUp() throws Exception {;
-		rangeObjectUnderTest = new Range(3, 5);
-		System.out.println(rangeObjectUnderTest.toString());
+		rangeObjectUnderTest = new Range(1, 5);
 	}
 	
 	@Test
