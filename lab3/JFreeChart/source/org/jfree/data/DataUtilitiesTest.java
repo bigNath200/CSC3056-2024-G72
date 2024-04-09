@@ -54,6 +54,39 @@ public class DataUtilitiesTest extends DataUtilities {
     public void testValidDataAndColumnTotal() {
         assertEquals("Wrong sum returned for column total.", 12, DataUtilities.calculateColumnTotal(values, 1), 0.0000001d);
     }
+    
+    
+    @Test
+    public void testValidDataWithNonNullValuesColumnTotal() {
+        // Add non-null values in the column
+        ((DefaultKeyedValues2D) values).setValue(1, 0, 0);
+        ((DefaultKeyedValues2D) values).setValue(4, 1, 0);
+        assertEquals("Wrong sum returned for column total with non-null values.", 5, DataUtilities.calculateColumnTotal(values, 0), 0.0000001d);
+    }
+
+    @Test
+    public void testValidDataWithNullValuesColumnTotal() {
+        // Add null values in the column
+        ((DefaultKeyedValues2D) values).setValue(null, 0, 0);
+        ((DefaultKeyedValues2D) values).setValue(null, 1, 0);
+        assertEquals("Wrong sum returned for column total with null values.", 0, DataUtilities.calculateColumnTotal(values, 0), 0.0000001d);
+    }
+    
+    @Test
+    public void testValidDataAndRowTotalWithNonNullValues() {
+        // Add non-null values in the row
+        ((DefaultKeyedValues2D) values).setValue(1, 0, 0);
+        ((DefaultKeyedValues2D) values).setValue(4, 0, 1);
+        assertEquals("Wrong sum returned for row total with non-null values.", 5, DataUtilities.calculateRowTotal(values, 0), 0.0000001d);
+    }
+
+    @Test
+    public void testValidDataAndRowTotalWithNullValues() {
+        // Add null values in the row
+        ((DefaultKeyedValues2D) values).setValue(null, 0, 0);
+        ((DefaultKeyedValues2D) values).setValue(null, 0, 1);
+        assertEquals("Wrong sum returned for row total with null values.", 0, DataUtilities.calculateRowTotal(values, 0), 0.0000001d);
+    }
 
     @Test
     public void testNullDataColumnTotal() {
@@ -113,18 +146,25 @@ public class DataUtilitiesTest extends DataUtilities {
     }
 
     @Test
-    public void testGetCulminativePercentagesValidData() {
+    public void testGetCumulativePercentagesWithNullValue() {
         DefaultKeyedValues keyValues = new DefaultKeyedValues();
         keyValues.addValue("0", 5.0);
-        keyValues.addValue("1", 9.0);
+        keyValues.addValue("1", null); // Add a null value
         keyValues.addValue("2", 2.0);
 
-        assertEquals("Wrong cumulative percentage returned.", 0.3125,
-                DataUtilities.getCumulativePercentages(keyValues).getValue("0").doubleValue(), 0.0000001d);
+        KeyedValues cumulativePercentages = DataUtilities.getCumulativePercentages(keyValues);
+
+        assertEquals("Wrong cumulative percentage returned for key '0'.", 0.625,
+                cumulativePercentages.getValue("0").doubleValue(), 0.0000001d);
+        assertEquals("Wrong cumulative percentage returned for key '1'.", 0.625,
+                cumulativePercentages.getValue("1").doubleValue(), 0.0000001d); // Branch with null value
+        assertEquals("Wrong cumulative percentage returned for key '2'.", 1.0,
+                cumulativePercentages.getValue("2").doubleValue(), 0.0000001d);
     }
 
+
     @Test
-    public void testGetCulminativePercentagesNullData() {
+    public void testGetCumulativePercentagesWithNullData() {
         try {
             DataUtilities.getCumulativePercentages(null);
             fail("Expected IllegalArgumentException for null data.");
@@ -144,8 +184,6 @@ public class DataUtilitiesTest extends DataUtilities {
             throw new AssertionError(message);
         }
     }
-    
-  
 
     private static void assert2DArraysEqual(String message, double[][] doubles, Number[][] numbers) {
         assertTrue("Arrays aren't equal.", doubles.length == numbers.length);
@@ -165,10 +203,3 @@ public class DataUtilitiesTest extends DataUtilities {
         }
     }
 }
-
-
-
-
-
-
-

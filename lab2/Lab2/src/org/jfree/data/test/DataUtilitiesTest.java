@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.jfree.data.DataUtilities;
 import org.jfree.data.DefaultKeyedValues;
 import org.jfree.data.DefaultKeyedValues2D;
+import org.jfree.data.KeyedValues;
 import org.jfree.data.Values2D;
 import org.junit.After;
 import org.junit.Before;
@@ -37,7 +38,7 @@ public class DataUtilitiesTest extends DataUtilities {
 
         double[][] testArray2D = {
                 {1.0, 2.0},
-                {3.0, 4.0},
+                {3.0, 4.0}
                 
         };
         doubleArrayNumbers = testArray2D;
@@ -61,6 +62,8 @@ public class DataUtilitiesTest extends DataUtilities {
             DataUtilities.calculateColumnTotal(null, 0);
             fail("Expected IllegalArgumentException for null data.");
         } catch (Exception e) {
+        	
+        	
             assertTrue("Incorrect exception type thrown", e.getClass().equals(IllegalArgumentException.class));
         }
     }
@@ -76,7 +79,9 @@ public class DataUtilitiesTest extends DataUtilities {
             DataUtilities.calculateRowTotal(null, 0);
             fail("Expected IllegalArgumentException for null data.");
         } catch (Exception e) {
+        	
             assertTrue("Incorrect exception type thrown", e.getClass().equals(IllegalArgumentException.class));
+        
         }
     }
 
@@ -86,6 +91,18 @@ public class DataUtilitiesTest extends DataUtilities {
         assertArrayEquals("Number and Double arrays do not match", numbersArray, noArray);
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     @Test
     public void testCreateNumberArrayNoData() {
         try {
@@ -99,8 +116,22 @@ public class DataUtilitiesTest extends DataUtilities {
     @Test
     public void testNumberArray2DCreationFrom2DDoubleArray() {
         Number[][] noArray = DataUtilities.createNumberArray2D(doubleArrayNumbers);
+      
         assert2DArraysEqual("Number and Double arrays do not match", doubleArrayNumbers, noArray);
+    	
+
     }
+    
+    
+    
+    
+   
+   
+
+    
+    
+    
+    
 
     @Test
     public void testCreateNumberArray2DNoData() {
@@ -119,8 +150,20 @@ public class DataUtilitiesTest extends DataUtilities {
         keyValues.addValue("1", 9.0);
         keyValues.addValue("2", 2.0);
 
+        
+     // Calculate cumulative percentages
+       KeyedValues cumulativePercentages = DataUtilities.getCumulativePercentages(keyValues);
+
+        // Iterate over keys and print key-value pairs
+        for (int i = 0; i < cumulativePercentages.getItemCount(); i++) {
+            String key = (String) cumulativePercentages.getKey(i);
+            Number value = cumulativePercentages.getValue(i);
+            System.out.println("Key: " + key + ", Cumulative Percentage: " + value);
+        }
+        
         assertEquals("Wrong cumulative percentage returned.", 0.3125,
                 DataUtilities.getCumulativePercentages(keyValues).getValue("0").doubleValue(), 0.0000001d);
+        
     }
 
     @Test
