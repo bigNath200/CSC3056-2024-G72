@@ -380,6 +380,7 @@ public class RangeTest {
         Range combinedRange2 = Range.combine(null, range1);
         
         assertEquals("Failure: Combined range should be equal to the non-null range.", range1, combinedRange1);
+        assertEquals("Failure: Combined range should be equal to the non-null range.", range1, combinedRange2);
     }
     
     @Test

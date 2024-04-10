@@ -194,7 +194,7 @@ public strictfp class Range implements Serializable {
      * @param range2  the second range (<code>null</code> permitted).
      *
      * @return A new range subsuming both input ranges (possibly <code>null</code>).
-     */
+     */ 
     public static Range combine(Range range1, Range range2) {
         if (range1 == null) {
             return range2;
